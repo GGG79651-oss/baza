@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Адаптация · Управление HR · ОЭЗ «Алабуга»</title>
+<style>
+:root{
+  --navy:#06265E;
+  --blue:#0A63C2;
+  --blue-2:#0A7BE0;
+  --sky:#2E9BE6;
+  --cyan:#16B6DC;
+  --ink:#122036;
+  --muted:#5B6B85;
+  --line:#DCE6F5;
+  --bg:#EEF4FD;
+  --card:#FFFFFF;
+  --ok:#1FA971;
+  --warn:#E8A400;
+  --bad:#E4574C;
+  --shadow:0 10px 30px rgba(9,48,110,.10);
+  --shadow-sm:0 4px 14px rgba(9,48,110,.08);
+  --r:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+a{color:var(--blue);text-decoration:none}
+h1,h2,h3,h4{line-height:1.2;margin:0 0 .4em}
+h2{font-size:clamp(22px,3vw,30px);color:var(--navy)}
+h3{font-size:19px;color:var(--navy)}
+p{margin:0 0 1em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* ---------- Top bar ---------- */
+header.top{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.top-in{display:flex;align-items:center;gap:14px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--navy);font-size:17px;letter-spacing:.2px}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:var(--shadow-sm)}
+nav.main{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+nav.main button{
+  border:0;background:transparent;color:var(--muted);font-weight:600;font-size:14px;
+  padding:9px 13px;border-radius:10px;cursor:pointer;transition:.15s;font-family:inherit;
+}
+nav.main button:hover{background:var(--bg);color:var(--navy)}
+nav.main button.active{background:var(--navy);color:#fff}
+.burger{display:none;margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:10px;
+  width:44px;height:40px;cursor:pointer;font-size:20px;color:var(--navy)}
+
+/* ---------- Progress pill ---------- */
+.prog-pill{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);
+  padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700;color:var(--navy);box-shadow:var(--shadow-sm)}
+.prog-pill .ring{--p:0;width:26px;height:26px;border-radius:50%;
+  background:conic-gradient(var(--cyan) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center}
+.prog-pill .ring i{width:18px;height:18px;background:#fff;border-radius:50%;display:block}
+
+/* ---------- Sections ---------- */
+section.page{display:none;padding:34px 0 70px;animation:fade .35s ease}
+section.page.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Hero ---------- */
+.hero{background:linear-gradient(135deg,var(--navy),var(--blue) 70%);color:#fff;border-radius:26px;
+  padding:36px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero:after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(22,182,220,.45),transparent 62%)}
+.hero-grid{display:grid;grid-template-columns:1fr 220px;gap:22px;align-items:center;position:relative;z-index:2}
+.hero h1{font-size:clamp(26px,4vw,40px);color:#fff;margin-bottom:.3em}
+.hero p{color:#D9E7FB;font-size:17px;margin-bottom:0}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px;letter-spacing:.3px}
+
+/* ---------- Robot mascot ---------- */
+.bot{width:100%;max-width:210px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.28))}
+.bot .eye{animation:blink 5s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.15)}}
+.bot-float{animation:floaty 4s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* Mascot speech row (inside content) */
+.speech{display:flex;gap:16px;align-items:flex-start;background:linear-gradient(180deg,#F3F9ff,#EAF3FF);
+  border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:0 0 24px;box-shadow:var(--shadow-sm)}
+.speech .avatar{flex:0 0 62px}
+.speech .avatar svg{width:62px;height:62px}
+.speech .bubble{position:relative}
+.speech .bubble .who{font-weight:800;color:var(--blue);font-size:13px;letter-spacing:.3px;margin-bottom:2px}
+.speech .bubble p{margin:0;color:var(--ink)}
+
+/* ---------- Cards & grids ---------- */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow-sm)}
+.card h3{display:flex;align-items:center;gap:9px}
+.ic{width:34px;height:34px;border-radius:9px;background:var(--bg);display:grid;place-items:center;flex:0 0 auto;
+  color:var(--blue);font-size:18px}
+.stat{text-align:center;padding:18px 12px}
+.stat .n{font-size:34px;font-weight:900;color:var(--blue);line-height:1}
+.stat .l{font-size:13px;color:var(--muted);margin-top:6px}
+.section-head{margin:34px 0 16px}
+.section-head .k{color:var(--cyan);font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.pill{display:inline-block;background:var(--bg);color:var(--blue);border-radius:999px;padding:3px 11px;
+  font-size:12.5px;font-weight:700;margin:0 6px 6px 0}
+
+/* value cards */
+.value{border-left:4px solid var(--cyan)}
+.value h3{color:var(--navy)}
+
+/* ---------- Timeline ---------- */
+.timeline{position:relative;margin-top:8px}
+.timeline:before{content:"";position:absolute;left:19px;top:6px;bottom:6px;width:3px;background:var(--line);border-radius:2px}
+.tl-item{position:relative;padding:0 0 22px 56px}
+.tl-item .dot{position:absolute;left:8px;top:2px;width:26px;height:26px;border-radius:50%;
+  background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:800;box-shadow:0 0 0 4px var(--bg)}
+.tl-item .when{color:var(--cyan);font-weight:800;font-size:13px;letter-spacing:.4px}
+.tl-item .what{font-weight:700;color:var(--navy);margin:1px 0 3px}
+.tl-item small{color:var(--muted)}
+
+/* ---------- Accordion (docs + faq) ---------- */
+.acc{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+.acc>button{width:100%;text-align:left;border:0;background:#fff;padding:18px 20px;cursor:pointer;
+  display:flex;align-items:center;gap:14px;font-family:inherit}
+.acc>button:hover{background:#F7FAFF}
+.acc .num{flex:0 0 40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;font-weight:900;display:grid;place-items:center;font-size:16px}
+.acc .t{flex:1}
+.acc .t .ti{font-weight:800;color:var(--navy);font-size:16.5px}
+.acc .t .sub{font-size:13px;color:var(--muted)}
+.acc .chev{transition:.25s;color:var(--muted);font-size:20px}
+.acc.open .chev{transform:rotate(180deg)}
+.acc .body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.acc .body-in{padding:2px 20px 22px 74px}
+.acc .body-in h4{color:var(--blue);margin:16px 0 6px;font-size:15px}
+.acc .body-in ul{margin:0 0 8px;padding-left:18px}
+.acc .body-in li{margin-bottom:5px}
+.mini-speech{background:#F3F9ff;border:1px dashed var(--sky);border-radius:12px;padding:12px 14px 12px 46px;
+  position:relative;margin:12px 0;color:var(--ink);font-size:14.5px}
+.mini-speech:before{content:"🤖";position:absolute;left:14px;top:11px;font-size:20px}
+.mini-speech b{color:var(--blue)}
+
+/* ---------- Checklist ---------- */
+.check-item{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);
+  border-radius:14px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:.15s;box-shadow:var(--shadow-sm)}
+.check-item:hover{border-color:var(--sky)}
+.check-item .box{flex:0 0 26px;width:26px;height:26px;border-radius:8px;border:2px solid var(--line);
+  display:grid;place-items:center;color:#fff;font-weight:900;transition:.15s;background:#fff}
+.check-item.done .box{background:var(--ok);border-color:var(--ok)}
+.check-item.done .lbl{color:var(--muted);text-decoration:line-through}
+.check-item .grp{font-size:11.5px;font-weight:800;letter-spacing:.4px;color:var(--cyan);text-transform:uppercase}
+.check-item .lbl{font-weight:600;color:var(--ink)}
+.check-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+
+/* ---------- Progress bar ---------- */
+.bar{height:12px;background:var(--line);border-radius:999px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));
+  border-radius:999px;transition:width .5s ease}
+
+/* ---------- Quiz ---------- */
+.quiz{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow-sm);margin-bottom:18px}
+.quiz .q{font-weight:700;color:var(--navy);margin:14px 0 10px}
+.quiz .opt{display:block;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;
+  cursor:pointer;transition:.12s;font-size:14.5px}
+.quiz .opt:hover{border-color:var(--sky);background:#F7FAFF}
+.quiz .opt.sel{border-color:var(--blue);background:#EFF6FF}
+.quiz .opt.correct{border-color:var(--ok);background:#EAF9F2}
+.quiz .opt.wrong{border-color:var(--bad);background:#FDEEEC}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border:0;border-radius:12px;
+  padding:12px 20px;font-weight:800;font-size:15px;cursor:pointer;font-family:inherit;transition:.15s;box-shadow:var(--shadow-sm)}
+.btn:hover{background:var(--navy)}
+.btn.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:var(--blue);background:#F7FAFF}
+.btn.sm{padding:8px 14px;font-size:13.5px}
+.quiz-result{border-radius:12px;padding:14px 16px;font-weight:700;margin-top:6px;display:none}
+.quiz-result.pass{background:#EAF9F2;color:#0d7a4f;display:block}
+.quiz-result.fail{background:#FDEEEC;color:#b23a30;display:block}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;padding:4px 10px;border-radius:999px}
+.badge.done{background:#EAF9F2;color:var(--ok)}
+.badge.todo{background:var(--bg);color:var(--muted)}
+
+/* ---------- Certificate ---------- */
+.cert{background:linear-gradient(135deg,#fff,#F3F9ff);border:2px solid var(--blue);border-radius:22px;
+  padding:34px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.cert.locked{filter:grayscale(.7);opacity:.65}
+.cert .seal{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;display:grid;place-items:center;font-size:34px;margin:0 auto 12px;box-shadow:var(--shadow)}
+.cert h2{color:var(--navy)}
+.cert .lines{max-width:520px;margin:16px auto;text-align:left}
+.cert .lines .li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line);color:var(--muted)}
+.cert .lines .li.ok{color:var(--ink)}
+.cert .lines .li .m{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:#fff;font-weight:900;background:var(--line);flex:0 0 auto}
+.cert .lines .li.ok .m{background:var(--ok)}
+.cert input{border:0;border-bottom:2px solid var(--blue);background:transparent;font-size:20px;font-weight:800;
+  text-align:center;color:var(--navy);padding:6px;font-family:inherit;width:min(360px,80%)}
+.lock-note{background:#FFF7E6;border:1px solid #F3D48A;color:#8a6400;border-radius:12px;padding:12px 16px;margin:14px 0;font-weight:600}
+
+footer{padding:26px 0;color:var(--muted);font-size:13px;text-align:center;border-top:1px solid var(--line)}
+
+/* toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);
+  background:var(--navy);color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;box-shadow:var(--shadow);
+  transition:.35s;z-index:99;font-size:14px}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:860px){
+  .g4{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr}
+  .hero-grid{grid-template-columns:1fr}.bot{max-width:150px;margin:0 auto;display:block}
+  nav.main{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);
+    flex-direction:column;padding:10px;gap:2px}
+  nav.main.open{display:flex}
+  .burger{display:block}
+  .prog-pill{display:none}
+}
+@media(max-width:560px){
+  .g2,.g4,.g3{grid-template-columns:1fr}
+  .acc .body-in{padding-left:20px}
+  .hero{padding:26px}
+}
+@media print{
+  header.top,nav.main,footer,.no-print{display:none!important}
+  section.page{display:none!important}
+  #cert-page{display:block!important}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="top">
+  <div class="wrap top-in">
+    <div class="logo"><span class="mark">А</span> Адаптация · HR Алабуга</div>
+    <nav class="main" id="nav">
+      <button data-go="home" class="active">Знакомство</button>
+      <button data-go="docs">Документы</button>
+      <button data-go="checklist">Первые дни</button>
+      <button data-go="tests">Тесты</button>
+      <button data-go="faq">FAQ</button>
+      <button data-go="cert">Сертификат</button>
+    </nav>
+    <div class="prog-pill" id="progPill" title="Твой прогресс адаптации">
+      <span class="ring" id="progRing"><i></i></span><span id="progTxt">0%</span>
+    </div>
+    <button class="burger" id="burger" aria-label="Меню">☰</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ HOME ============ -->
+<section class="page show" id="home">
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="tag">УПРАВЛЕНИЕ HR · МОДУЛЬ «ОЦЕНКА СОТРУДНИКОВ» · АССЕССМЕНТ 2026–2027</span>
+        <h1>Привет! Я&nbsp;Алабот 🤖</h1>
+        <p>Твой цифровой наставник в управлении HR ОЭЗ «Алабуга». За 2 месяца я проведу тебя от первого дня до сертификата: покажу документы, объясню правила ассессмента простыми словами и помогу всё усвоить назубок. Поехали!</p>
+      </div>
+      <div><div class="bot-float" id="heroBot"></div></div>
+    </div>
+  </div>
+
+  <div class="grid g4" style="margin-top:22px">
+    <div class="card stat"><div class="n">2</div><div class="l">месяца адаптации</div></div>
+    <div class="card stat"><div class="n">80%</div><div class="l">базовый порог знаний</div></div>
+    <div class="card stat"><div class="n">100%</div><div class="l">по критическим правилам</div></div>
+    <div class="card stat"><div class="n">2&nbsp;нед.</div><div class="l">первый ассессмент</div></div>
+  </div>
+
+  <div class="section-head"><div class="k">С чего начать</div><h2>Как устроено это приложение</h2></div>
+  <div class="grid g3">
+    <div class="card"><h3><span class="ic">📚</span>Документы</h3><p>4 ключевых регламента, которые я пересказываю понятным языком — без «канцелярита».</p><button class="btn sm ghost" data-go="docs">Открыть</button></div>
+    <div class="card"><h3><span class="ic">✅</span>Первые дни</h3><p>Дорожная карта на 2 месяца и чек-лист из 12 пунктов. Отмечай сделанное — прогресс сохраняется.</p><button class="btn sm ghost" data-go="checklist">Открыть</button></div>
+    <div class="card"><h3><span class="ic">🧠</span>Тесты</h3><p>Проверь себя после каждого блока. Порог 80% — как на реальной аттестации.</p><button class="btn sm ghost" data-go="tests">Открыть</button></div>
+  </div>
+
+  <div class="section-head"><div class="k">Где ты работаешь</div><h2>ОЭЗ «Алабуга» и управление HR</h2></div>
+  <div class="speech">
+    <div class="avatar" data-bot="mini"></div>
+    <div class="bubble"><div class="who">АЛАБОТ</div>
+      <p>Коротко о главном: «Алабуга» — масштабный федеральный проект развития регионов через инвестиции в высокотехнологичные производства. А наше управление HR отвечает за <b>оценку сотрудников</b> — ассессмент. Именно этому ремеслу я тебя и научу.</p>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="ic">🏭</span>Что такое «Алабуга»</h3>
+      <p>Особая экономическая зона (ОЭЗ) — территория с особым режимом предпринимательской деятельности и таможенной процедурой свободной зоны. АО «ОЭЗ ППТ «Алабуга» — управляющая компания, инфраструктурный партнёр полного цикла: кадры, социалка, промышленность, стройка.</p>
+      <span class="pill">43 резидента (2025)</span><span class="pill">10 площадок</span><span class="pill">Vision: 50 производств</span></div>
+    <div class="card"><h3><span class="ic">🎯</span>Наша миссия</h3>
+      <p style="font-size:17px;color:var(--navy);font-weight:700;font-style:italic">«Мы растим промышленность для благополучия людей, создавая лучшую в мире инфраструктуру».</p>
+      <p style="color:var(--muted);font-size:14px">Заводы — это налоги для государства и зарплата для людей. В конечном итоге мы всё делаем для благополучия людей.</p></div>
+  </div>
+
+  <div class="section-head"><div class="k">Фундамент культуры</div><h2>4 ценности компании</h2></div>
+  <div class="grid g2">
+    <div class="card value"><h3>Это наша компания, это наша страна</h3><p>Каждый лидер берёт на себя ответственность: не делегирует проблемы наверх, а предлагает решения. Видишь неэффективность — устрани её.</p></div>
+    <div class="card value"><h3>Зона развития — в паре шагов от зоны комфорта</h3><p>Настоящие достижения начинаются там, где ты выходишь из зоны комфорта: анализируешь сложное, звонишь неприятным людям, берёшь вызов.</p></div>
+    <div class="card value"><h3>Выходим из зоны комфорта ради комфорта клиента</h3><p>Думаем о реальных потребностях клиентов — и внешних, и внутренних. У сотрудников внутри компании тоже есть свои клиенты.</p></div>
+    <div class="card value"><h3>Каждому по результату</h3><p>Мы оцениваем людей по результату, а не по труду. Нет результата — нет поощрения. Есть результат — есть признание.</p></div>
+  </div>
+
+  <div class="section-head"><div class="k">Общая картина</div><h2>Программа адаптации за 2 месяца</h2></div>
+  <div class="grid g4">
+    <div class="card"><h3><span class="ic">1</span>Обучение</h3><p>Регламенты, правила симуляций, чек-листы, культура общения, чаты и система оценивания.</p></div>
+    <div class="card"><h3><span class="ic">2</span>Наблюдение</h3><p>Аудит запуска ассессмента опытным сотрудником, фиксация этапов и итоговых таблиц.</p></div>
+    <div class="card"><h3><span class="ic">3</span>Практика</h3><p>Роли «Хелпер» и «Ведущий»: помощь участникам, запуск, администрирование и оценка.</p></div>
+    <div class="card"><h3><span class="ic">4</span>Аттестация</h3><p>Контроль знаний, первый самостоятельный ассессмент, обратная связь и финальный вердикт.</p></div>
+  </div>
+  <div class="mini-speech" style="margin-top:16px"><b>Алабот:</b> Переход между этапами всегда подтверждает наставник или ответственный HR. Не торопись — сначала уверенность, потом самостоятельность.</div>
+</section>
+
+<!-- ============ DOCS ============ -->
+<section class="page" id="docs">
+  <div class="section-head"><div class="k">Раздел 1</div><h2>Документы и регламенты</h2></div>
+  <div class="speech">
+    <div class="avatar" data-bot="mini"></div>
+    <div class="bubble"><div class="who">АЛАБОТ</div>
+      <p>Здесь 4 документа, которые нужно знать назубок. Я разложил каждый по полочкам и пересказал своими словами. Открывай карточку, читай мой разбор — а потом проверь себя в разделе «Тесты».</p>
+    </div>
+  </div>
+
+  <!-- DOC 1 -->
+  <div class="acc" data-doc="1">
+    <button><span class="num">01</span><span class="t"><div class="ti">Регламент о правилах работы внутри управления HR</div><div class="sub">Как устроена работа отдела, дисциплина и инструменты</div></span><span class="chev">⌄</span></button>
+    <div class="body"><div class="body-in">
+      <div class="mini-speech"><b>Своими словами:</b> Это «правила дома» нашего управления. Они про то, как мы общаемся, где ведём работу и что считается нормой. Освоишь их в первые дни — и сразу будешь «свой».</div>
+      <h4>Что важно усвоить</h4>
+      <ul>
+        <li><b>Рабочие инструменты и доступы:</b> Bitrix24 (задачи и процессы), Synology (файлы и хранилище), Outlook (почта). В День 1 проверь, что всё работает.</li>
+        <li><b>Дисциплина и сроки:</b> плановые даты в адаптации считаются от твоей фактической даты выхода.</li>
+        <li><b>Коммуникация:</b> рабочие чаты, чат поддержки ассессмента, культура общения с коллегами и участниками.</li>
+        <li><b>Ответственность:</b> каждый пункт чек-листа фиксирует факт сдачи, дату и подпись ответственного.</li>
+      </ul>
+      <div class="mini-speech">📌 <b>Заглушка для точного текста:</b> здесь вставь пункты вашего актуального регламента — я перескажу их так же по-дружески. Пока показываю опорные тезисы из программы адаптации.</div>
+    </div></div>
+  </div>
+
+  <!-- DOC 2 -->
+  <div class="acc" data-doc="2">
+    <button><span class="num">02</span><span class="t"><div class="ti">Корпоративная культура</div><div class="sub">Миссия, ценности, 21 компетенция, лидерство, грейды</div></span><span class="chev">⌄</span></button>
+    <div class="body"><div class="body-in">
+      <div class="mini-speech"><b>Своими словами:</b> Это «характер» компании. Культура «Алабуги» нацелена на развитие лидерских качеств. Ниже — самое главное, что спрашивают при сдаче культуры в конце 2-го месяца.</div>
+
+      <h4>Миссия</h4>
+      <ul><li>«Мы растим промышленность для благополучия людей, создавая лучшую в мире инфраструктуру».</li></ul>
+
+      <h4>4 ценности</h4>
+      <ul>
+        <li><b>Это наша компания, это наша страна</b> — берём ответственность, предлагаем решения.</li>
+        <li><b>Зона развития — в паре шагов от зоны комфорта</b> — растём через вызовы.</li>
+        <li><b>Выходим из зоны комфорта ради комфорта клиента</b> — клиенты бывают внешние и внутренние.</li>
+        <li><b>Каждому по результату</b> — оцениваем по результату, а не по труду.</li>
+      </ul>
+
+      <h4>Основные компетенции</h4>
+      <ul>
+        <li><b>Стремление к большему</b> — главная мотивация: без целей начинается деградация.</li>
+        <li><b>Вера в дело</b> — фундамент всех компетенций: делать то, во что искренне веришь.</li>
+      </ul>
+
+      <h4>21 лидерская компетенция (на них строится система оценки)</h4>
+      <div>
+        <span class="pill">Видение картины в целом</span><span class="pill">Выделять главное</span><span class="pill">Декомпозиция</span>
+        <span class="pill">Обучаемость</span><span class="pill">Чуйка на людей</span><span class="pill">Вариативность мышления</span>
+        <span class="pill">Делегирование и контроль</span><span class="pill">Сделать дело, а не найти причину</span><span class="pill">Искренность</span>
+        <span class="pill">Коммерческая чуйка</span><span class="pill">Управление рисками</span><span class="pill">Эмпатия</span>
+        <span class="pill">Неваляшность</span><span class="pill">Ориентация на качество</span><span class="pill">Влиять и убеждать</span>
+        <span class="pill">Заряжать энергией</span><span class="pill">…и др. — всего 21</span>
+      </div>
+
+      <h4>Выход из зоны комфорта: две «мышцы»</h4>
+      <ul>
+        <li><b>Аналитика:</b> маржа (разница между себестоимостью и ценой), «хвостик» = 5%×оценка себестоимости + маржа контрагента, NPV (чистая приведённая стоимость: если &gt;0 — проект эффективен).</li>
+        <li><b>Общение (переговоры):</b> зелёная / красная / жестяная линии, точка давления, «ковровая дорожка», BATNA (лучшая альтернатива договорённости).</li>
+      </ul>
+
+      <h4>Декомпозиция и цели</h4>
+      <ul><li>Разбиваем сложное на простое. Цели ставим по <b>SMART / КИДЗО</b> (конкретная, измеримая, достижимая, значимая, ограниченная во времени). Уровень «Forward» — цель достигается без дополнительных вводных.</li></ul>
+
+      <h4>7 принципов лидерства</h4>
+      <ul><li>Лидер стремится к большему · учится на своих ошибках · чаще вне зоны комфорта · осознанно управляет энергией · берёт ответственность за себя и других · заряжает команду · добивается результата.</li></ul>
+
+      <h4>Делегирование и грейды</h4>
+      <ul>
+        <li>3 направления: <b>Идеология</b> (ключевые решения), <b>Эксплуатация</b> (технические решения), <b>Строительство</b> (реализация).</li>
+        <li>Грейдовая система — <b>21 ступень</b>. Пересмотр грейда не реже 1 раза в год.</li>
+      </ul>
+      <div class="mini-speech">🎓 Именно этот блок — «сдача корпоративной культуры» — отдельная контрольная точка до конца 2-го месяца. И оценивают её не только тестом, но и твоим поведением в реальном процессе.</div>
+    </div></div>
+  </div>
+
+  <!-- DOC 3 -->
+  <div class="acc" data-doc="3">
+    <button><span class="num">03</span><span class="t"><div class="ti">Правила игр ассессмента (симуляции)</div><div class="sub">Business Cats LTD, «Грузовики LTD», «Цивилизация»</div></span><span class="chev">⌄</span></button>
+    <div class="body"><div class="body-in">
+      <div class="mini-speech"><b>Своими словами:</b> Ассессмент — это деловые игры-симуляции, в которых мы оцениваем участников. Чтобы вести их, ты сначала сам разбираешься в правилах каждой игры и в чек-листах.</div>
+      <h4>Симуляции</h4>
+      <ul>
+        <li><b>Business Cats LTD (BC LTD)</b> — есть свой чек-лист корректных действий.</li>
+        <li><b>«Грузовики LTD» (Грузовики LTD RT)</b> — свой чек-лист, отрабатывается на HR-платформе.</li>
+        <li><b>«Цивилизация»</b> — контрольная точка 1-го месяца: сдать 1 сейв за Англию и 1 сейв за Францию с выполненной революцией независимости. Файлы должны открываться и соответствовать условиям.</li>
+      </ul>
+      <h4>Что рядом с правилами</h4>
+      <ul>
+        <li><b>Положение о проведении симуляций</b> — сдаётся специалисту (День 4).</li>
+        <li><b>Чек-листы</b> — подтверждение корректных действий ответственному HR (День 3).</li>
+        <li>Требование: по правилам симуляций — <b>нет ошибок, нарушающих ход игры</b>.</li>
+      </ul>
+      <div class="mini-speech">📌 <b>Заглушка:</b> точные правила каждой игры добавим сюда из вашего документа — я разложу их по шагам.</div>
+    </div></div>
+  </div>
+
+  <!-- DOC 4 -->
+  <div class="acc" data-doc="4">
+    <button><span class="num">04</span><span class="t"><div class="ti">Регламент проведения ассессмента</div><div class="sub">Роли, протокол сессии, система оценивания</div></span><span class="chev">⌄</span></button>
+    <div class="body"><div class="body-in">
+      <div class="mini-speech"><b>Своими словами:</b> Это твоя главная «инструкция ведущего». Как запустить сессию, как себя вести, как оценивать участников и фиксировать результат.</div>
+      <h4>Роли (ты проходишь их по порядку)</h4>
+      <ul>
+        <li><b>Наблюдатель</b> — видит процесс и фиксирует действия.</li>
+        <li><b>Хелпер</b> — помогает участникам и команде, ассистирует опытному сотруднику.</li>
+        <li><b>Ведущий</b> — самостоятельно запускает и администрирует сессию.</li>
+        <li>Итог → <b>Вердикт:</b> готов / доработка / повтор.</li>
+      </ul>
+      <h4>Протокол первого ассессмента (конец 2-й недели)</h4>
+      <ul>
+        <li><b>До:</b> регламенты сданы, доступы работают, приветствие принято, роли Наблюдатель и Хелпер пройдены, фильтр знаний закрыт.</li>
+        <li><b>Во время:</b> самостоятельный запуск, администрирование, работа с таблицами, оценка участников. Наставник не вмешивается без критической причины.</li>
+        <li><b>После:</b> разбор полётов, итоговый балл, обратная связь, план доработки, вердикт.</li>
+      </ul>
+      <h4>Система оценивания и общение</h4>
+      <ul>
+        <li>Написание общего комментария, правила фиксации результата, оценка 360°.</li>
+        <li>Скрипты и чат поддержки: правила ответа и корректные реакции в нестандартных ситуациях.</li>
+        <li><b>Культура общения:</b> нейтральный тон, уважение, конфиденциальность.</li>
+        <li>Пороги: <b>80%</b> базовый, <b>85%</b> практическая готовность, <b>100%</b> по критическим правилам.</li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section class="page" id="checklist">
+  <div class="section-head"><div class="k">Раздел 2</div><h2>Чек-лист первых дней</h2></div>
+  <div class="speech">
+    <div class="avatar" data-bot="mini"></div>
+    <div class="bubble"><div class="who">АЛАБОТ</div>
+      <p>Вот твой маршрут. Сверху — дорожная карта на 2 месяца, ниже — детально первая неделя. А в самом низу интерактивный чек-лист: отмечай пункты галочкой, и я буду считать твой прогресс. Всё сохраняется в этом браузере.</p>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3><span class="ic">🗺️</span>Дорожная карта (2 месяца)</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="dot">1</div><div class="when">ДНИ 1–3</div><div class="what">Ввод и правила</div><small>Регламенты, доступы, правила симуляций, чек-листы BC LTD и «Грузовики LTD RT».</small></div>
+        <div class="tl-item"><div class="dot">2</div><div class="when">ДНИ 4–7</div><div class="what">Коммуникация</div><small>Положение о симуляциях, культура общения, чат поддержки и система оценивания.</small></div>
+        <div class="tl-item"><div class="dot">3</div><div class="when">НЕДЕЛЯ 2</div><div class="what">Практика</div><small>Роли Наблюдатель → Хелпер → Ведущий и первый самостоятельный ассессмент.</small></div>
+        <div class="tl-item"><div class="dot">4</div><div class="when">1 МЕСЯЦ</div><div class="what">Цивилизация</div><small>Сейв за Англию и сейв за Францию с революцией независимости + сверка CORP KPI.</small></div>
+        <div class="tl-item"><div class="dot">5</div><div class="when">2 МЕСЯЦА</div><div class="what">Финал</div><small>Сдача корпоративной культуры, итоговая аттестация и сертификат.</small></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="ic">📅</span>Неделя 1 по дням</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="dot">1</div><div class="what">Старт</div><small>Общий регламент, HR + корпкультура, миссия, ценности, компетенции. Доступы: Bitrix24, Synology, Outlook.</small></div>
+        <div class="tl-item"><div class="dot">2</div><div class="what">Правила</div><small>График ассессментов и правила симуляций: Business Cats LTD, «Грузовики LTD», «Цивилизация». Устная сдача / тест.</small></div>
+        <div class="tl-item"><div class="dot">3</div><div class="what">Чек-листы</div><small>BC LTD и «Грузовики LTD RT»; подтверждение корректных действий ответственному HR.</small></div>
+        <div class="tl-item"><div class="dot">4</div><div class="what">Положение</div><small>Положение о проведении симуляций и самостоятельная сдача аттестации специалисту.</small></div>
+        <div class="tl-item"><div class="dot">5</div><div class="what">Культура</div><small>Правила общения, коммуникация с участниками, демонстрация приветственного слова.</small></div>
+        <div class="tl-item"><div class="dot">6</div><div class="what">Поддержка</div><small>Скрипты и чат поддержки: правила ответа и реакции в нестандартных ситуациях.</small></div>
+        <div class="tl-item"><div class="dot">7</div><div class="what">Оценивание</div><small>Система оценивания, общий комментарий, фиксация результата, сдача теста.</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>Единый чек-лист сотрудника</h2></div>
+  <div class="check-toolbar">
+    <div><span class="badge done" id="clDoneBadge">0 из 12</span></div>
+    <button class="btn ghost sm" id="clReset">Сбросить отметки</button>
+  </div>
+  <div class="bar" style="margin-bottom:18px"><i id="clBar"></i></div>
+  <div id="checklist"></div>
+</section>
+
+<!-- ============ TESTS ============ -->
+<section class="page" id="tests">
+  <div class="section-head"><div class="k">Раздел 3</div><h2>Проверка знаний</h2></div>
+  <div class="speech">
+    <div class="avatar" data-bot="mini"></div>
+    <div class="bubble"><div class="who">АЛАБОТ</div>
+      <p>4 мини-теста — по одному на каждый блок. Порог прохождения <b>80%</b>, как на реальной аттестации. Отвечай, жми «Проверить» — я подсвечу верные ответы и запомню лучший результат.</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px" id="testBadges"></div>
+  <div id="tests"></div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="page" id="faq">
+  <div class="section-head"><div class="k">Раздел 4</div><h2>База знаний · частые вопросы</h2></div>
+  <div class="speech">
+    <div class="avatar" data-bot="mini"></div>
+    <div class="bubble"><div class="who">АЛАБОТ</div>
+      <p>Собрал вопросы, которые чаще всего задают новички. Если чего-то не хватает — спроси наставника, а мы потом добавим ответ сюда.</p>
+    </div>
+  </div>
+  <div id="faq"></div>
+</section>
+
+<!-- ============ CERTIFICATE ============ -->
+<section class="page" id="cert">
+  <div class="section-head"><div class="k">Финал</div><h2>Сертификат пройденной адаптации</h2></div>
+  <div id="certLock" class="lock-note">🔒 Сертификат откроется, когда будут выполнены: весь чек-лист (12 из 12) и все 4 теста пройдены на 80%+. Твой прогресс: <b id="certProgTxt">0%</b>.</div>
+  <div class="cert locked" id="certCard">
+    <div class="seal">🏅</div>
+    <div style="font-weight:800;color:var(--cyan);letter-spacing:2px;font-size:13px">АЛАБУГА · HR АДАПТАЦИЯ</div>
+    <h2>Сертификат пройденной адаптации</h2>
+    <p style="color:var(--muted)">выдан сотруднику</p>
+    <input id="certName" placeholder="Введи своё ФИО" maxlength="60">
+    <div class="lines">
+      <div class="li" data-req="cl"><span class="m">✓</span> Обучение и погружение (чек-лист)</div>
+      <div class="li" data-req="t0"><span class="m">✓</span> Тест: Корпоративная культура</div>
+      <div class="li" data-req="t1"><span class="m">✓</span> Тест: Ассессмент и роли</div>
+      <div class="li" data-req="t2"><span class="m">✓</span> Тест: Симуляции и правила</div>
+      <div class="li" data-req="t3"><span class="m">✓</span> Тест: Критерии и оценивание</div>
+    </div>
+    <p style="color:var(--muted);font-size:14px">Дата: <b id="certDate">—</b></p>
+    <button class="btn no-print" id="certPrint" disabled>🖨️ Распечатать / сохранить в PDF</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Приложение адаптации · Управление HR · ОЭЗ «Алабуга» · маскот Алабот 🤖 · прогресс хранится локально в вашем браузере
+</footer>
+
+<div id="toast"></div>
+
+<script>
+/* ========= ROBOT MASCOT (SVG) ========= */
+function botSVG(size){
+  return `<svg class="bot" viewBox="0 0 200 220" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" aria-label="Алабот">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#2E9BE6"/><stop offset="1" stop-color="#0A63C2"/>
+      </linearGradient>
+      <linearGradient id="scr" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0B2A5B"/><stop offset="1" stop-color="#123B7A"/>
+      </linearGradient>
+    </defs>
+    <!-- antenna -->
+    <line x1="100" y1="30" x2="100" y2="10" stroke="#16B6DC" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="100" cy="8" r="7" fill="#16B6DC"/>
+    <!-- head -->
+    <rect x="42" y="30" width="116" height="92" rx="24" fill="url(#bg)"/>
+    <rect x="42" y="30" width="116" height="92" rx="24" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+    <!-- face screen -->
+    <rect x="56" y="46" width="88" height="60" rx="16" fill="url(#scr)"/>
+    <!-- eyes -->
+    <g fill="#5FE8FF">
+      <circle class="eye" cx="82" cy="76" r="9"/>
+      <circle class="eye" cx="118" cy="76" r="9"/>
+    </g>
+    <!-- smile -->
+    <path d="M80 92 Q100 106 120 92" stroke="#16B6DC" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <!-- ears -->
+    <rect x="34" y="62" width="9" height="26" rx="4" fill="#0A63C2"/>
+    <rect x="157" y="62" width="9" height="26" rx="4" fill="#0A63C2"/>
+    <!-- body -->
+    <rect x="54" y="126" width="92" height="66" rx="20" fill="url(#bg)"/>
+    <rect x="72" y="140" width="56" height="30" rx="10" fill="#0B2A5B" opacity=".55"/>
+    <text x="100" y="161" text-anchor="middle" font-size="16" fill="#5FE8FF" font-family="Arial" font-weight="bold">HR</text>
+    <!-- arms -->
+    <rect x="34" y="132" width="16" height="42" rx="8" fill="#0A63C2"/>
+    <rect x="150" y="132" width="16" height="42" rx="8" fill="#0A63C2"/>
+    <circle cx="42" cy="178" r="9" fill="#16B6DC"/><circle cx="158" cy="178" r="9" fill="#16B6DC"/>
+  </svg>`;
+}
+document.getElementById('heroBot').innerHTML = botSVG(210);
+document.querySelectorAll('[data-bot="mini"]').forEach(e=>e.innerHTML=botSVG(62));
+
+/* ========= NAVIGATION ========= */
+const pages=['home','docs','checklist','tests','faq','cert'];
+function go(id){
+  pages.forEach(p=>document.getElementById(p).classList.toggle('show',p===id));
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.go===id));
+  document.getElementById('nav').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='cert') refreshCert();
+}
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+document.getElementById('burger').addEventListener('click',()=>document.getElementById('nav').classList.toggle('open'));
+
+/* ========= STATE (localStorage) ========= */
+const KEY='alabuga_hr_onboarding_v1';
+const state=JSON.parse(localStorage.getItem(KEY)||'{}');
+state.cl=state.cl||{}; state.tests=state.tests||{}; state.name=state.name||'';
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+
+/* ========= TOAST ========= */
+let tT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2200)}
+
+/* ========= ACCORDIONS (docs) ========= */
+document.querySelectorAll('.acc').forEach(acc=>{
+  const btn=acc.querySelector('button'),body=acc.querySelector('.body');
+  btn.addEventListener('click',()=>{
+    const open=acc.classList.toggle('open');
+    body.style.maxHeight=open?body.scrollHeight+40+'px':0;
+  });
+});
+
+/* ========= CHECKLIST ========= */
+const checklist=[
+  {g:'Обучение',t:'Business Cats LTD — правила изучены'},
+  {g:'Обучение',t:'«Грузовики LTD» — правила изучены'},
+  {g:'Обучение',t:'«Цивилизация» — правила изучены'},
+  {g:'Регламенты',t:'Общий регламент сдан'},
+  {g:'Регламенты',t:'Регламент проведения ассессмента сдан'},
+  {g:'Регламенты',t:'Приветственное слово продемонстрировано'},
+  {g:'Роли',t:'Роль «Наблюдатель» пройдена'},
+  {g:'Роли',t:'Роль «Хелпер» пройдена'},
+  {g:'Роли',t:'Роль «Ведущий» — первый самостоятельный ассессмент'},
+  {g:'Контроль',t:'Итоговая аттестация пройдена'},
+  {g:'Контроль',t:'Обратная связь 360° получена'},
+  {g:'Доступы',t:'Bitrix24, Synology, Outlook + личный профиль настроены'}
+];
+const clBox=document.getElementById('checklist');
+checklist.forEach((it,i)=>{
+  const d=document.createElement('div');
+  d.className='check-item'+(state.cl[i]?' done':'');
+  d.innerHTML=`<div class="box">✓</div><div><div class="grp">${it.g}</div><div class="lbl">${it.t}</div></div>`;
+  d.addEventListener('click',()=>{state.cl[i]=!state.cl[i];d.classList.toggle('done',state.cl[i]);save();updateProgress();
+    if(state.cl[i]&&Object.values(state.cl).filter(Boolean).length===12)toast('🎉 Чек-лист закрыт полностью!');});
+  clBox.appendChild(d);
+});
+document.getElementById('clReset').addEventListener('click',()=>{
+  if(!confirm('Сбросить все отметки чек-листа?'))return;
+  state.cl={};save();document.querySelectorAll('#checklist .check-item').forEach(e=>e.classList.remove('done'));updateProgress();
+});
+
+/* ========= QUIZZES ========= */
+const quizzes=[
+ {id:'t0',title:'Тест 1 · Корпоративная культура',icon:'🎯',q:[
+   {q:'Какая миссия компании «Алабуга»?',o:['Продавать землю инвесторам','Растим промышленность для благополучия людей, создавая лучшую в мире инфраструктуру','Строить только жильё','Импортировать технологии'],a:1},
+   {q:'Что означает ценность «Каждому по результату»?',o:['Платим всем поровну','Оцениваем по количеству часов','Оцениваем людей по результату, а не по труду','Поощряем за стаж'],a:2},
+   {q:'Сколько лидерских компетенций в системе оценки?',o:['7','12','21','50'],a:2},
+   {q:'Что такое BATNA?',o:['Вид отчёта','Лучшая альтернатива договорённости на переговорах','Название симуляции','Показатель прибыли'],a:1},
+   {q:'Сколько ступеней в грейдовой системе и как часто пересматривается грейд?',o:['10 ступеней, раз в 5 лет','21 ступень, не реже 1 раза в год','15 ступеней, ежемесячно','21 ступень, раз в 3 года'],a:1}
+ ]},
+ {id:'t1',title:'Тест 2 · Ассессмент и роли',icon:'👥',q:[
+   {q:'Правильный порядок ролей новичка:',o:['Ведущий → Хелпер → Наблюдатель','Наблюдатель → Хелпер → Ведущий','Хелпер → Ведущий → Наблюдатель','Ведущий → Наблюдатель → Хелпер'],a:1},
+   {q:'Когда проводится первый самостоятельный ассессмент?',o:['В первый день','В конце второй недели','Через 2 месяца','Когда захочет сотрудник'],a:1},
+   {q:'Что делает «Хелпер»?',o:['Только наблюдает','Помогает участникам и команде, ассистирует','Принимает финальное решение','Пишет регламенты'],a:1},
+   {q:'Когда наставник вмешивается в самостоятельную сессию?',o:['Постоянно','Никогда','Только при риске сбоя, угрозе корректности оценки или блокирующем факторе','Каждые 10 минут'],a:2},
+   {q:'Какие бывают итоговые вердикты?',o:['Да / нет','Готов / доработка / повтор','Зачёт / незачёт','Плюс / минус'],a:1}
+ ]},
+ {id:'t2',title:'Тест 3 · Симуляции и правила',icon:'🎮',q:[
+   {q:'Что нужно сдать по «Цивилизации» в конце 1-го месяца?',o:['Один сейв за Германию','Сейв за Англию и сейв за Францию с революцией независимости','Только теорию','Ничего'],a:1},
+   {q:'Какие симуляции используются в ассессменте?',o:['Только шахматы','Business Cats LTD, «Грузовики LTD», «Цивилизация»','FIFA и Dota','Монополия'],a:1},
+   {q:'Кому подтверждаются корректные действия по чек-листам BC LTD?',o:['Никому','Ответственному HR','Другому новичку','Клиенту'],a:1},
+   {q:'Требование к правилам симуляций:',o:['Можно ошибаться','Нет ошибок, нарушающих ход симуляции','Ошибки не считаются','Достаточно 50%'],a:1}
+ ]},
+ {id:'t3',title:'Тест 4 · Критерии и оценивание',icon:'📊',q:[
+   {q:'Базовый порог знаний при аттестации:',o:['50%','70%','80%','100%'],a:2},
+   {q:'Какой порог по критическим правилам?',o:['80%','85%','90%','100%'],a:3},
+   {q:'Как оценивается культура общения?',o:['Только тестом','Не оценивается','Тестом и поведением в реальном процессе','На глаз'],a:2},
+   {q:'Что входит в культуру общения при оценке?',o:['Скорость печати','Нейтральный тон, уважение, конфиденциальность','Знание английского','Внешний вид'],a:1},
+   {q:'Что оформляется только после закрытия чек-листа, сдачи культуры и сейвов?',o:['Премия','Сертификат пройденной адаптации','Отпуск','Новый доступ'],a:1}
+ ]}
+];
+const testsBox=document.getElementById('tests');
+quizzes.forEach(qz=>{
+  const wrap=document.createElement('div');wrap.className='quiz';wrap.id=qz.id;
+  let html=`<h3><span class="ic">${qz.icon}</span>${qz.title}</h3>`;
+  qz.q.forEach((item,qi)=>{
+    html+=`<div class="q">${qi+1}. ${item.q}</div><div class="opts" data-q="${qi}">`;
+    item.o.forEach((op,oi)=>html+=`<label class="opt" data-o="${oi}">${op}</label>`);
+    html+=`</div>`;
+  });
+  html+=`<div style="margin-top:14px"><button class="btn" data-check="${qz.id}">Проверить</button>
+         <button class="btn ghost" data-retry="${qz.id}" style="margin-left:8px">Сбросить</button></div>
+         <div class="quiz-result" id="res_${qz.id}"></div>`;
+  wrap.innerHTML=html;testsBox.appendChild(wrap);
+  wrap.querySelectorAll('.opts').forEach(grp=>{
+    grp.querySelectorAll('.opt').forEach(op=>op.addEventListener('click',()=>{
+      grp.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));op.classList.add('sel');
+    }));
+  });
+});
+document.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>{
+  const id=b.dataset.check,qz=quizzes.find(q=>q.id===id),wrap=document.getElementById(id);
+  let correct=0,answered=0;
+  qz.q.forEach((item,qi)=>{
+    const grp=wrap.querySelector(`.opts[data-q="${qi}"]`),sel=grp.querySelector('.opt.sel');
+    grp.querySelectorAll('.opt').forEach(o=>o.classList.remove('correct','wrong'));
+    grp.querySelectorAll('.opt')[item.a].classList.add('correct');
+    if(sel){answered++;const oi=+sel.dataset.o;if(oi===item.a)correct++;else sel.classList.add('wrong');}
+  });
+  const pct=Math.round(correct/qz.q.length*100);
+  const res=document.getElementById('res_'+id);
+  const pass=pct>=80;
+  res.className='quiz-result '+(pass?'pass':'fail');
+  res.textContent=(pass?'✅ Зачёт! ':'❌ Порог 80% не пройден. ')+`Результат: ${correct} из ${qz.q.length} (${pct}%).`+(pass?' Отличная работа!':' Повтори материал и попробуй снова.');
+  state.tests[id]=Math.max(state.tests[id]||0,pct);save();updateProgress();renderTestBadges();
+  if(pass&&answered===qz.q.length)toast('✅ Тест пройден на '+pct+'%');
+}));
+document.querySelectorAll('[data-retry]').forEach(b=>b.addEventListener('click',()=>{
+  const wrap=document.getElementById(b.dataset.retry);
+  wrap.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel','correct','wrong'));
+  wrap.querySelector('.quiz-result').className='quiz-result';
+}));
+function renderTestBadges(){
+  const box=document.getElementById('testBadges');box.innerHTML='';
+  quizzes.forEach(qz=>{
+    const sc=state.tests[qz.id]||0,pass=sc>=80;
+    const s=document.createElement('span');s.className='badge '+(pass?'done':'todo');
+    s.textContent=(pass?'✓ ':'')+qz.title.split('·')[1].trim()+(sc?` — ${sc}%`:'');
+    box.appendChild(s);
+  });
+}
+
+/* ========= FAQ ========= */
+const faqs=[
+ {q:'С чего начинается мой первый день?',a:'С общего регламента, знакомства с управлением HR и корпоративной культурой (миссия, ценности, компетенции) и настройки доступов: Bitrix24, Synology, Outlook.'},
+ {q:'Сколько длится адаптация?',a:'Единая программа — 2 месяца: обучение, наблюдение, практика, аттестация и сертификат. Плановые даты считаются от твоей фактической даты выхода.'},
+ {q:'Когда я впервые проведу ассессмент сам?',a:'Ключевая контрольная точка — конец второй рабочей недели. До этого ты проходишь роли «Наблюдатель» и «Хелпер».'},
+ {q:'Какой порог нужно набрать на аттестации?',a:'80% — базовый минимум, 85% — практическая готовность, а по критическим правилам — 100%. Ошибок, нарушающих ход симуляции, быть не должно.'},
+ {q:'Что за «правило 14-го числа»?',a:'Если ты вышел до 14-го числа месяца — цели формируются сразу. Если после 14-го — срок и формат согласуются с курирующим HR.'},
+ {q:'Что нужно для получения сертификата?',a:'Закрыть весь чек-лист, сдать корпоративную культуру, сдать сейвы по «Цивилизации» (Англия и Франция с революцией независимости) и подтвердить самостоятельную работу.'},
+ {q:'Кто подтверждает переход между этапами?',a:'Наставник или ответственный HR. Двигаешься дальше только когда закрыты обязательные пункты и нет критических ошибок.'},
+ {q:'Как оценивается культура общения?',a:'Не только тестом, но и твоим поведением в реальном процессе ассессмента: нейтральный тон, уважение, конфиденциальность.'}
+];
+const faqBox=document.getElementById('faq');
+faqs.forEach((f,i)=>{
+  const acc=document.createElement('div');acc.className='acc';
+  acc.innerHTML=`<button><span class="num">?</span><span class="t"><div class="ti">${f.q}</div></span><span class="chev">⌄</span></button>
+    <div class="body"><div class="body-in" style="padding-left:74px"><div class="mini-speech"><b>Алабот:</b> ${f.a}</div></div></div>`;
+  const body=acc.querySelector('.body');
+  acc.querySelector('button').addEventListener('click',()=>{const o=acc.classList.toggle('open');body.style.maxHeight=o?body.scrollHeight+40+'px':0;});
+  faqBox.appendChild(acc);
+});
+
+/* ========= PROGRESS ========= */
+function updateProgress(){
+  const clDone=Object.values(state.cl).filter(Boolean).length;
+  const testsPassed=quizzes.filter(q=>(state.tests[q.id]||0)>=80).length;
+  // weight: checklist 60%, tests 40%
+  const pct=Math.round((clDone/12*60)+(testsPassed/4*40));
+  document.getElementById('progTxt').textContent=pct+'%';
+  document.getElementById('progRing').style.setProperty('--p',pct);
+  document.getElementById('clBar').style.width=(clDone/12*100)+'%';
+  document.getElementById('clDoneBadge').textContent=clDone+' из 12';
+  document.getElementById('certProgTxt').textContent=pct+'%';
+  return {clDone,testsPassed,pct};
+}
+/* ========= CERTIFICATE ========= */
+const certName=document.getElementById('certName');
+certName.value=state.name;
+certName.addEventListener('input',()=>{state.name=certName.value;save();});
+function refreshCert(){
+  const {clDone,testsPassed}=updateProgress();
+  const card=document.getElementById('certCard');
+  const reqs={cl:clDone===12,t0:(state.tests.t0||0)>=80,t1:(state.tests.t1||0)>=80,t2:(state.tests.t2||0)>=80,t3:(state.tests.t3||0)>=80};
+  document.querySelectorAll('.cert .li').forEach(li=>li.classList.toggle('ok',reqs[li.dataset.req]));
+  const done=clDone===12 && testsPassed===4;
+  card.classList.toggle('locked',!done);
+  document.getElementById('certPrint').disabled=!done;
+  document.getElementById('certLock').style.display=done?'none':'block';
+  document.getElementById('certDate').textContent=done?new Date().toLocaleDateString('ru-RU'):'—';
+}
+document.getElementById('certPrint').addEventListener('click',()=>{
+  if(!certName.value.trim()){toast('Впиши ФИО в сертификат');certName.focus();return;}
+  window.print();
+});
+
+/* ========= INIT ========= */
+updateProgress();renderTestBadges();
+</script>
+</body>
+</html>
