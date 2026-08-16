@@ -1,0 +1,10 @@
+# Исходные документы и презентации – в репозиторий не выкладываются
+*.pdf
+*.docx
+*.pptx
+assets/docs/
+
+# Служебное
+.DS_Store
+index.backup-*.html
+S600xU_2x.webp
